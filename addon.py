@@ -3991,8 +3991,10 @@ class BLENDERMCP_PT_Panel(bpy.types.Panel):
         # Connection
         box = layout.box()
         col = box.column()
-        if scene.blendermcp_server_running:
-            col.label(text=f"Connected on port {scene.blendermcp_port}", icon='CHECKMARK')
+        # A loaded .blend may contain stale flags/ports from another session.
+        server = getattr(bpy.types, "blendermcp_server", None)
+        if server and server.running:
+            col.label(text=f"Connected on port {server.port}", icon='CHECKMARK')
             col.operator("blendermcp.stop_server", text="Disconnect", icon='X')
         else:
             col.label(text="Not connected", icon='RADIOBUT_OFF')

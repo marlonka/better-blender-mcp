@@ -62,6 +62,21 @@ can supply the executable directly for workers that do not need a GUI connection
 To keep upstream's asset-service tools, run `blender-mcp` instead. Both entry points
 use the improved transport. The enhanced addon retains upstream protocol 5 commands.
 
+### After restarting your computer
+
+Open Blender with **Better Blender MCP** enabled. The addon auto-starts its local
+server on port **9876** by default. In the 3D viewport, press **N**, open **MCP for
+Blender**, and check **Connected on port 9876**. If stopped, click **Connect to MCP
+server**. The panel reads the actual server state, including after opening a scene
+that was saved with a disconnected flag.
+
+Open your configured MCP client (for example Codex). It launches the compact
+server using the saved `command` and `args`; no terminal command or reinstall is
+needed. Keep the checkout and Python environment at their configured paths. If
+the addon is missing, enable it once under **Preferences → Add-ons** and save
+preferences. A new Blender major/minor version may need the addon installed in
+that version's add-ons directory.
+
 ## A modeling iteration
 
 1. Inspect the reference and subject. Match silhouette, proportions and camera first.
