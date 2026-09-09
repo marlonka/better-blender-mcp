@@ -1,0 +1,12 @@
+{
+  "source": "User-supplied front photograph of enerBiO Topping Gebrannte Winternuesse 250 g",
+  "method": "Inverse cylindrical projection, 4096 x 1024, plus sampled cap top",
+  "evidenced": "Visible front label, silhouette, colours and cap top",
+  "inferred": "Back, glass wall thickness, thread geometry and absolute dimensions",
+  "dimensions_m": {
+    "diameter": 0.08163899999999999,
+    "height": 0.0962
+  },
+  "scale": "Estimated from image proportions; no physical measurement provided",
+  "trademark": "enerBiO and ROSSMANN belong to their respective owners; independent reconstruction study"
+}

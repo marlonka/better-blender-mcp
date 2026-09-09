@@ -1,6 +1,7 @@
 # Code created by Siddharth Ahuja: www.github.com/ahujasid © 2025
 
 import re
+import ast
 import bpy
 import mathutils
 import json
@@ -27,12 +28,12 @@ from contextlib import contextmanager, redirect_stdout, suppress
 from bpy.app.handlers import persistent
 
 bl_info = {
-    "name": "MCP for Blender",
-    "author": "BlenderMCP",
-    "version": (1, 6),
+    "name": "Better Blender MCP",
+    "author": "Siddharth Ahuja; better-blender-mcp contributors",
+    "version": (1, 9, 1),
     "blender": (3, 0, 0),
     "location": "View3D > Sidebar > MCP for Blender",
-    "description": "Connect Blender to Claude via MCP",
+    "description": "Compact MCP jobs, responsive transport and isolated modeling workflows",
     "category": "Interface",
 }
 
@@ -454,7 +455,10 @@ class BlenderMCPServer:
         # thread-safe, so registering a timer per command (the previous
         # approach) could silently drop the callback - on Windows especially -
         # leaving the client blocked in recv() until its socket timeout.
-        self.command_queue = queue.Queue()
+        self.command_queue = queue.Queue(maxsize=64)
+        self.jobs = {}
+        self._job_order = []
+        self._digest_cache = {}
         # Live client sockets, so stop() can unblock threads parked in recv().
         self._clients = set()
         self._clients_lock = threading.Lock()
@@ -565,6 +569,9 @@ class BlenderMCPServer:
 
     def stop(self):
         self.running = False
+        # A restart must not resume partially applied mutations unexpectedly.
+        for job_id in list(self._job_order):
+            self.cancel_job(job_id)
 
         _unregister_edit_capture_handlers()
         get_edit_recorder().drain()
@@ -660,26 +667,31 @@ class BlenderMCPServer:
         if not self.running:
             return None
 
-        while True:
+        # Budget applies BETWEEN commands. Python/bpy work cannot be preempted.
+        # Replies are sent by the client thread, never by Blender's UI thread.
+        # Python 3.11 monotonic() can tick at ~16 ms on Windows; an 8 ms UI
+        # budget needs the high-resolution performance counter.
+        deadline = time.perf_counter() + 0.008
+        while time.perf_counter() < deadline:
             try:
-                command, client = self.command_queue.get_nowait()
+                command, reply = self.command_queue.get_nowait()
             except queue.Empty:
                 break
 
+            if time.monotonic() > reply.expires_at:
+                continue
             try:
                 response = self.execute_command(command)
-                response_json = json.dumps(response)
             except Exception as e:
                 print(f"Error executing command: {str(e)}")
                 traceback.print_exc()
-                response_json = json.dumps({"status": "error", "message": str(e)})
+                response = {"status": "error", "message": str(e)}
+            reply.put_nowait(response)
 
-            try:
-                client.sendall(response_json.encode('utf-8'))
-            except Exception:
-                print("Failed to send response - client disconnected")
-
-        return 0.05
+        # Exactly one job stage per tick lets UI events and cancellation run.
+        if time.perf_counter() < deadline:
+            self._advance_job()
+        return 0.01 if self._job_order or not self.command_queue.empty() else 0.05
 
     def _handle_client(self, client):
         """Handle connected client"""
@@ -701,22 +713,33 @@ class BlenderMCPServer:
                         break
 
                     buffer += data
-                    try:
-                        # Try to parse command
-                        command = json.loads(buffer.decode('utf-8'))
-                        buffer = b''
-
-                        # Hand off to the main thread. Never call
-                        # bpy.app.timers.register() from here - it is not
-                        # thread-safe and the callback can be silently lost.
-                        print(f"Queued command: {command.get('type')}")
-                        self.command_queue.put((command, client))
-                    except (json.JSONDecodeError, UnicodeDecodeError):
-                        # Incomplete data, wait for more. A multi-byte UTF-8
-                        # character can land split across a recv() chunk
-                        # boundary, which fails decode() before json.loads()
-                        # ever runs - that's incomplete data too, not garbage.
-                        pass
+                    if len(buffer) > 2_000_000:
+                        raise ValueError("Command exceeds 2 MB transport limit")
+                    while buffer.strip():
+                        try:
+                            decoded = buffer.decode('utf-8').lstrip()
+                            command, end = json.JSONDecoder().raw_decode(decoded)
+                        except (json.JSONDecodeError, UnicodeDecodeError):
+                            break
+                        buffer = decoded[end:].encode('utf-8')
+                        if not isinstance(command, dict):
+                            raise ValueError("Command must be a JSON object")
+                        reply = queue.Queue(maxsize=1)
+                        reply.expires_at = time.monotonic() + 180
+                        try:
+                            self.command_queue.put_nowait((command, reply))
+                        except queue.Full:
+                            client.sendall(b'{"status":"error","message":"Command queue full; retry later"}')
+                            continue
+                        while self.running:
+                            try:
+                                response = reply.get(timeout=0.1)
+                                client.sendall(json.dumps(response, separators=(',', ':')).encode('utf-8'))
+                                break
+                            except queue.Empty:
+                                if time.monotonic() > reply.expires_at:
+                                    client.sendall(b'{"status":"error","message":"Queued command expired"}')
+                                    break
                 except socket.timeout:
                     # Expected; loop round and re-check self.running.
                     continue
@@ -761,6 +784,10 @@ class BlenderMCPServer:
 
         # Base handlers that are always available
         handlers = {
+            "submit_job": self.submit_job,
+            "get_job_status": self.get_job_status,
+            "cancel_job": self.cancel_job,
+            "scene_digest": self.scene_digest,
             "get_scene_info": self.get_scene_info,
             "get_world_state_snapshot": self.get_world_state_snapshot,
             "get_addon_info": self.get_addon_info,
@@ -845,6 +872,7 @@ class BlenderMCPServer:
             "addon_version": list(bl_info.get("version", (0, 0))),
             "protocol_version": ADDON_PROTOCOL_VERSION,
             "capabilities": sorted([
+                "submit_job", "get_job_status", "cancel_job", "scene_digest",
                 "get_scene_info",
                 "get_world_state_snapshot",
                 "get_addon_info",
@@ -856,7 +884,173 @@ class BlenderMCPServer:
                 "set_telemetry_consent",
             ]),
             "blender_version": bpy.app.version_string,
+            "enhanced_version": "0.1.0",
+            "blender_binary": bpy.app.binary_path,
         }
+
+    def submit_job(self, steps, job_id=None):
+        """Validate all stages before queueing; same ID + content never replays."""
+        if not isinstance(steps, list) or not 1 <= len(steps) <= 64:
+            raise ValueError("Provide 1-64 stages")
+        if len(json.dumps(steps)) > 1_000_000:
+            raise ValueError("Job exceeds 1 MB")
+        aliases = {'bpy': 'bpy'}
+        for step in steps:
+            if not isinstance(step, dict) or not isinstance(step.get('code'), str):
+                raise ValueError("Each stage requires code and an optional name")
+            compile(step['code'], '<blender-job>', 'exec')
+            self._check_ui_operations(step['code'], aliases)
+        fingerprint = hashlib.sha256(json.dumps(steps, sort_keys=True).encode()).hexdigest()
+        job_id = job_id or uuid.uuid4().hex
+        if not isinstance(job_id, str) or not 1 <= len(job_id) <= 128:
+            raise ValueError("job_id must be 1-128 characters")
+        if job_id in self.jobs:
+            if self.jobs[job_id]['fingerprint'] != fingerprint:
+                raise ValueError("job_id already used with different content")
+            return self.get_job_status(job_id)
+        if len(self._job_order) >= 8:
+            raise ValueError("Job queue full (8 active jobs)")
+        # Bound memory. Idempotency lasts while the job is in this 128-job cache.
+        if len(self.jobs) >= 128:
+            oldest = next((k for k in self.jobs if k not in self._job_order), None)
+            if oldest:
+                del self.jobs[oldest]
+        self.jobs[job_id] = dict(id=job_id, fingerprint=fingerprint, state='queued',
+            steps=steps, completed=0, total=len(steps), results=[], namespace={'bpy': bpy},
+            created=time.perf_counter(), elapsed_ms=0)
+        self._job_order.append(job_id)
+        return self.get_job_status(job_id)
+
+    @staticmethod
+    def _check_ui_operations(code, aliases):
+        """Reject known blocking operators, including straightforward aliases.
+
+        A scheduling guard, not a Python sandbox. Dynamic code can bypass it.
+        """
+        tree = ast.parse(code)
+        def path(node):
+            if isinstance(node, ast.Name):
+                return aliases.get(node.id, '')
+            if isinstance(node, ast.Attribute):
+                prefix = path(node.value)
+                return prefix + '.' + node.attr if prefix else ''
+            return ''
+        blocked = ('bpy.ops.render.', 'bpy.ops.object.bake',
+            'bpy.ops.ptcache.bake', 'bpy.ops.fluid.bake', 'bpy.ops.rigidbody.bake')
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for item in node.names:
+                    if item.name == 'bpy':
+                        aliases[item.asname or 'bpy'] = 'bpy'
+            elif isinstance(node, ast.ImportFrom) and (node.module or '').startswith('bpy'):
+                for item in node.names:
+                    aliases[item.asname or item.name] = node.module + '.' + item.name
+            elif isinstance(node, ast.Assign):
+                value = path(node.value)
+                for target in node.targets:
+                    if isinstance(target, ast.Name) and value:
+                        aliases[target.id] = value
+            elif isinstance(node, ast.Call):
+                operation = path(node.func)
+                if operation.startswith(blocked):
+                    raise ValueError(f'{operation} can block Blender. Run this recipe in blender_worker instead.')
+
+    def get_job_status(self, job_id):
+        if job_id not in self.jobs:
+            raise ValueError('Unknown or evicted job_id')
+        job = self.jobs[job_id]
+        result = {k: job[k] for k in ('id', 'state', 'completed', 'total', 'elapsed_ms')}
+        # Socket serialization happens later on another thread. Freeze evidence.
+        result['results'] = [dict(row) for row in job['results']]
+        return result
+
+    def cancel_job(self, job_id):
+        job = self.jobs.get(job_id)
+        if job is None:
+            raise ValueError('Unknown or evicted job_id')
+        if job_id in self._job_order:
+            self._job_order.remove(job_id)
+            job['state'] = 'cancelled'
+            job['elapsed_ms'] = round((time.perf_counter()-job['created'])*1000, 2)
+            job.pop('namespace', None)
+            job.pop('steps', None)
+        return self.get_job_status(job_id)
+
+    def _advance_job(self):
+        if not self._job_order:
+            return
+        job_id = self._job_order[0]
+        job = self.jobs[job_id]
+        step = job['steps'][job['completed']]
+        job['state'] = 'running'
+        started = time.perf_counter()
+        # Limit retained output during execution, not after an unbounded buffer.
+        class Capture:
+            def __init__(self):
+                self.text = ''
+                self.dropped = 0
+            def write(self, value):
+                keep = max(0, 2048 - len(self.text))
+                self.text += value[:keep]
+                self.dropped += max(0, len(value) - keep)
+                return len(value)
+            def flush(self):
+                pass
+        output = Capture()
+        result = {'name': str(step.get('name', job['completed']))[:100]}
+        try:
+            with get_edit_recorder().agent_command(), redirect_stdout(output):
+                exec(compile(step['code'], '<blender-job>', 'exec'), job['namespace'])
+            job['completed'] += 1
+        except BaseException as exc:
+            job['state'] = 'failed'
+            result['error'] = (type(exc).__name__ + ': ' + str(exc))[:1024]
+        result.update(ms=round((time.perf_counter()-started)*1000, 2),
+                      output=output.text, dropped_chars=output.dropped)
+        if result['ms'] > 100:
+            result['warning'] = 'Stage exceeded 100 ms UI budget; move expensive work to a worker'
+        job['results'].append(result)
+        job['elapsed_ms'] = round((time.perf_counter()-job['created'])*1000, 2)
+        if job['completed'] == job['total']:
+            job['state'] = 'succeeded'
+        if job['state'] in ('failed', 'succeeded'):
+            self._job_order.pop(0)
+            job.pop('namespace', None)
+            job.pop('steps', None)
+
+    def scene_digest(self, names=None, since=None, offset=0, limit=40):
+        """Bounded geometry/material evidence; deltas only for a matching query."""
+        if not isinstance(limit, int) or not 1 <= limit <= 200 or not isinstance(offset, int) or offset < 0:
+            raise ValueError('limit must be 1-200; offset must be nonnegative')
+        if names is not None and (not isinstance(names, list) or len(names) > 200 or not all(isinstance(n, str) for n in names)):
+            raise ValueError('names must be a list of at most 200 object names')
+        objects = sorted(bpy.context.scene.objects, key=lambda obj: obj.name)
+        if names is not None:
+            wanted = set(names)
+            objects = [o for o in objects if o.name in wanted]
+        rows = {}
+        for obj in objects[offset:offset+limit]:
+            mesh = getattr(obj, 'data', None)
+            rows[obj.name] = dict(type=obj.type,
+                position=[round(float(x), 6) for x in obj.location],
+                rotation=[round(float(x), 6) for x in obj.rotation_euler],
+                dimensions=[round(float(x), 6) for x in obj.dimensions],
+                materials=[s.material.name if s.material else None for s in obj.material_slots],
+                vertices=len(mesh.vertices) if obj.type == 'MESH' else 0,
+                polygons=len(mesh.polygons) if obj.type == 'MESH' else 0)
+        query = [sorted(names) if names is not None else None, offset, limit]
+        context = dict(scene=bpy.context.scene.name, total=len(objects), query=query)
+        token = hashlib.sha256(json.dumps([context, rows], sort_keys=True).encode()).hexdigest()[:20]
+        previous = self._digest_cache.get(since)
+        delta = previous is not None and previous[0]['query'] == query and previous[0]['scene'] == context['scene']
+        changed = {k:v for k,v in rows.items() if not delta or previous[1].get(k) != v}
+        removed = sorted(set(previous[1])-set(rows)) if delta else []
+        self._digest_cache[token] = (context, rows)
+        if len(self._digest_cache) > 16:
+            del self._digest_cache[next(iter(self._digest_cache))]
+        return dict(revision=token, delta=delta, total=len(objects), offset=offset,
+            next_offset=offset+limit if offset+limit < len(objects) else None,
+            objects=changed, removed=removed)
 
     def get_scene_info(self):
         """Get information about the current Blender scene"""

@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "blender": "5.2.1 LTS",
+  "artifacts": {
+    "blend": {
+      "path": "examples/product-studio/public/assets/winternuesse.blend",
+      "bytes": 3884798,
+      "updated_this_run": true
+    },
+    "glb": {
+      "path": "examples/product-studio/public/assets/winternuesse.glb",
+      "bytes": 4473960,
+      "updated_this_run": true
+    },
+    "render": {
+      "path": "examples/product-studio/public/assets/blender-render.png",
+      "bytes": 855270,
+      "updated_this_run": true
+    },
+    "model_info": {
+      "path": "examples/product-studio/public/assets/model-info.json",
+      "bytes": 363,
+      "updated_this_run": true
+    }
+  },
+  "audit": {
+    "scope": "Product",
+    "mesh_count": 8,
+    "checked_mesh_count": 8,
+    "material_count": 6,
+    "vertices": 28166,
+    "triangles": 56320,
+    "issue_count": 0,
+    "issue_counts": {},
+    "issues": [],
+    "objects": [
+      {
+        "name": "Cap",
+        "vertices": 5378,
+        "faces": 5632,
+        "triangles": 10752,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0,
+        "collapsed_textured_uv_faces": 0
+      },
+      {
+        "name": "Cap_Gasket",
+        "vertices": 1536,
+        "faces": 1536,
+        "triangles": 3072,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Glass_Thread_01",
+        "vertices": 3072,
+        "faces": 3072,
+        "triangles": 6144,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Glass_Thread_02",
+        "vertices": 3072,
+        "faces": 3072,
+        "triangles": 6144,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Glass_Thread_03",
+        "vertices": 3072,
+        "faces": 3072,
+        "triangles": 6144,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Jar_Glass",
+        "vertices": 7938,
+        "faces": 8192,
+        "triangles": 15872,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Label",
+        "vertices": 1024,
+        "faces": 1024,
+        "triangles": 2048,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0,
+        "collapsed_textured_uv_faces": 0
+      },
+      {
+        "name": "Nut_Cream",
+        "vertices": 3074,
+        "faces": 3328,
+        "triangles": 6144,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0,
+        "collapsed_textured_uv_faces": 0
+      }
+    ],
+    "camera": {
+      "name": "Camera",
+      "projection": "ORTHO",
+      "subject_bbox_ndc": [
+        0.0823,
+        0.0392,
+        0.8554,
+        0.9675
+      ],
+      "scope": "Projected object bounding boxes; conservative, not visible silhouette"
+    },
+    "limits": "Base mesh only; no self-intersection, UV overlap, shader equivalence or aesthetic-quality proof."
+  },
+  "comparison": {
+    "comparable": true,
+    "assumption": "Single product on transparent or near-white background; row-filled silhouette; no alignment",
+    "silhouette_iou": 0.98415,
+    "reference_bbox_px": [
+      70,
+      41,
+      745,
+      866
+    ],
+    "render_bbox_px": [
+      71,
+      43,
+      745,
+      863
+    ],
+    "bbox_delta_px": [
+      1,
+      2,
+      0,
+      -3
+    ],
+    "foreground_rgb_mae": 0.0723,
+    "rgb_mae_by_image_third": {
+      "top": 0.05431,
+      "middle": 0.06702,
+      "bottom": 0.09643
+    },
+    "channel_space": "Normalized Blender image-buffer values; sRGB for the example PNGs",
+    "clipped_white_foreground_fraction": 0.04359,
+    "render_updated_this_run": true
+  },
+  "audit_ms": 140.43
+}

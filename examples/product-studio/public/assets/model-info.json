@@ -1,0 +1,20 @@
+{
+  "meshes": 8,
+  "vertices": 28166,
+  "triangles": 56320,
+  "materials": 6,
+  "dimensions_m": [
+    0.08163899999999999,
+    0.08163899999999999,
+    0.0962
+  ],
+  "blender": "5.2.1 LTS",
+  "glb_bytes": 4473960,
+  "stages_ms": {
+    "setup": 53.22,
+    "materials": 41.09,
+    "geometry": 178.79,
+    "studio": 0.77,
+    "bake": 3382.43
+  }
+}
