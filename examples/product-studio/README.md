@@ -57,6 +57,27 @@ Three.js room reflections and lights are designed for interactive viewing; they
 do not reproduce Cycles ray tracing exactly. The photograph already contains
 lighting, so the label is not a measured diffuse-albedo texture.
 
+## White-background packshots
+
+Three Cycles renders of the packed model are in `renders/`: frontal, left at
+28°, and right at 30°, with camera elevations of 7°, 14° and 21°. Each PNG is
+1600 × 1800 pixels, RGB, with an opaque white background and a contact shadow.
+`renders/winternuesse-studio.blend` contains all three cameras and the editable
+render setup. The original product `.blend` and GLB are preserved.
+
+From the repository root, using the saved Codex Blender MCP configuration:
+
+```sh
+uv run --extra dev python tools/render_product_views.py --preview
+uv run --extra dev python tools/render_product_views.py
+```
+
+Both commands use `blender_worker` to load the saved product and render in an
+isolated process. The open Blender scene stays in place. A shader fade removes
+white reference-background contamination at the label's near-tangent edges;
+it blends into the existing inferred back colors, preserving readable front
+artwork. This render material is not a new glTF export.
+
 ## Dependencies and verification
 
 `three` is pinned to **0.186.0**; TypeScript's separately published `@types/three`

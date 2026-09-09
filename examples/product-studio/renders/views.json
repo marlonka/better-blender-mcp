@@ -1,0 +1,37 @@
+{
+  "source": "public/assets/winternuesse.blend",
+  "engine": "Cycles",
+  "samples": 128,
+  "background": "#FFFFFF",
+  "material_adjustment": "Render-only fade of contaminated tangent pixels into inferred back colors; front artwork unchanged.",
+  "views": [
+    {
+      "name": "frontal",
+      "file": "winternuesse-frontal.png",
+      "azimuth_degrees": 0,
+      "elevation_degrees": 7,
+      "camera": "Packshot | frontal",
+      "render_seconds": 120.82
+    },
+    {
+      "name": "links",
+      "file": "winternuesse-links.png",
+      "azimuth_degrees": -28,
+      "elevation_degrees": 14,
+      "camera": "Packshot | links",
+      "render_seconds": 123.96
+    },
+    {
+      "name": "rechts",
+      "file": "winternuesse-rechts.png",
+      "azimuth_degrees": 30,
+      "elevation_degrees": 21,
+      "camera": "Packshot | rechts",
+      "render_seconds": 126.31
+    }
+  ],
+  "resolution": [
+    1600,
+    1800
+  ]
+}
