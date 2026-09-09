@@ -108,6 +108,9 @@ the supporting browser loads its GLB using **Three.js r186**.
 - [Before audit](benchmarks/quality-before.json) / [after audit](benchmarks/quality-after.json)
 - [Measured MCP results](benchmarks/product-study.json)
 - [Viewer and asset provenance](examples/product-studio/README.md)
+- [Fotowelt station reconstruction](examples/fotowelt/README.md): a second reference
+  with cabinetry, three kiosks, bent-plywood seating and packed photo artwork,
+  built through the same enhanced MCP workers.
 
 The automatic audit found 13 issues in the initial reconstruction. Repairs removed
 open seams and collapsed UVs, joined the cap into a closed solid, and baked the nut

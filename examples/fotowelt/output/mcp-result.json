@@ -1,0 +1,38 @@
+{
+  "mcp_entry_point": [
+    "-m",
+    "blender_mcp.compact_server"
+  ],
+  "worker_tool_calls": 5,
+  "elapsed_seconds": 108.27,
+  "worker": {
+    "state": "succeeded",
+    "elapsed_ms": 106170,
+    "returncode": 0,
+    "tree_cleanup": "windows_job"
+  },
+  "audit": {
+    "scope": "Fotowelt",
+    "mesh_count": 146,
+    "checked_mesh_count": 146,
+    "material_count": 21,
+    "vertices": 9022,
+    "triangles": 17156,
+    "issue_count": 0,
+    "issue_counts": {},
+    "camera": {
+      "name": "Camera | complete station",
+      "projection": "PERSP",
+      "subject_bbox_ndc": [
+        0.1601,
+        0.0811,
+        0.8584,
+        0.8914
+      ],
+      "scope": "Projected object bounding boxes; conservative, not visible silhouette"
+    },
+    "limits": "Base mesh only; no self-intersection, UV overlap, shader equivalence or aesthetic-quality proof.",
+    "issues": [],
+    "omitted_issues": 0
+  }
+}
