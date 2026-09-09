@@ -1,0 +1,14 @@
+Use case: product-mockup
+Asset type: FLAT rectangular printed label artwork to become a UV texture on a real 3D food jar in Blender. Generate only the flat graphic, never a jar, can, photograph, perspective mockup or scene.
+Primary request: a fictional premium collaboration label for "enerBiO × MONSTER ENERGY", flavor "ULTRA WHITE", "LIMITED EDITION", for a TOPPING in a 250 g jar.
+Format: extremely wide landscape, exactly 3:1 aspect ratio, ideally 3072 by 1024. Artwork fills the canvas edge to edge without margins or a sheet border.
+Composition: the entire main brand/title hierarchy is centered in the middle 34 percent of the total image width, leaving the left and right thirds as beautiful decorative wrapping side panels. This central front panel has about a square footprint. All lettering stays inside the central 34 percent so it remains readable when the label curves around a jar.
+Design: crisp ivory-white and white-silver Monster Ultra White aesthetic, sophisticated engraved silver-gray floral scrollwork, abstract filigree, citrus blossom linework and fine heraldic flourishes on the side panels. Plenty of calm white space in the front. Recognizable enerBiO logo in forest green with leaf detail, paired with the recognizable three-stroke Monster claw in dark silver and the MONSTER ENERGY wordmark in black. Restrained editorial typography, print-sharp edges. Use green only for the enerBiO logo and one very fine accent rule. White, cool silver and deep charcoal dominate.
+Exact centered front hierarchy, top to bottom:
+1. A slim charcoal capsule reading "LIMITED EDITION" in small, generously spaced white uppercase.
+2. A balanced collaboration lockup: green "enerBiO" logo at left, small "×" in the middle, silver Monster three-claw mark and "MONSTER ENERGY" at right, all inside the central front square.
+3. Very large, condensed bold black type on two lines: "ULTRA" then "WHITE". This is the dominant title.
+4. Smaller spaced black line: "TOPPING".
+5. Fine text: "MIT ULTRA WHITE GESCHMACK".
+6. Small "250 g" centered at the foot.
+There is no other copy. Avoid any ZERO SUGAR or calorie, nutrition, organic certification or caffeine claims. No barcode. No palm trees, no green tropical Ultra Paradise graphics. The outermost left and right edges must be plain white for a seamless white continuation onto the back of the jar. Fine silver horizontal keylines at the top and bottom can run to the edges. Flat ink colors without photographic reflections, cast shadows, extruded letters, folds or fabric. Beautiful, highly legible finished packaging design.

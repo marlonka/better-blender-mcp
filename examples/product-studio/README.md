@@ -78,6 +78,15 @@ white reference-background contamination at the label's near-tangent edges;
 it blends into the existing inferred back colors, preserving readable front
 artwork. This render material is not a new glTF export.
 
+## Ultra White label concept
+
+[`ultra-white/`](ultra-white/) contains a fictional enerBiO × Monster Energy
+Ultra White Limited Edition: flat label artwork, a packed Blender variant and
+three white-background Cycles renders. Rebuild through the same MCP client with
+`python tools/render_product_views.py --variant ultra-white` from the repository
+root. Add `--preview` for small proofs. The viewer continues to use the original
+Winternüsse assets.
+
 ## Dependencies and verification
 
 `three` is pinned to **0.186.0**; TypeScript's separately published `@types/three`

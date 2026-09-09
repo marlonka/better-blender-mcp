@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "blender": "5.2.1 LTS",
+  "artifacts": {
+    "frontal": {
+      "path": "examples/product-studio/ultra-white/ultra-white-frontal.png",
+      "bytes": 1966451,
+      "updated_this_run": true
+    },
+    "links": {
+      "path": "examples/product-studio/ultra-white/ultra-white-links.png",
+      "bytes": 2169519,
+      "updated_this_run": true
+    },
+    "rechts": {
+      "path": "examples/product-studio/ultra-white/ultra-white-rechts.png",
+      "bytes": 2228074,
+      "updated_this_run": true
+    },
+    "views": {
+      "path": "examples/product-studio/ultra-white/views.json",
+      "bytes": 1250,
+      "updated_this_run": true
+    },
+    "blend": {
+      "path": "examples/product-studio/ultra-white/ultra-white.blend",
+      "bytes": 6637334,
+      "updated_this_run": true
+    },
+    "render": {
+      "path": "examples/product-studio/ultra-white/ultra-white-frontal.png",
+      "bytes": 1966451,
+      "updated_this_run": true
+    }
+  },
+  "audit": {
+    "scope": "Product",
+    "mesh_count": 8,
+    "checked_mesh_count": 8,
+    "material_count": 5,
+    "vertices": 28166,
+    "triangles": 56320,
+    "issue_count": 0,
+    "issue_counts": {},
+    "issues": [],
+    "objects": [
+      {
+        "name": "Cap",
+        "vertices": 5378,
+        "faces": 5632,
+        "triangles": 10752,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0,
+        "collapsed_textured_uv_faces": 0
+      },
+      {
+        "name": "Cap_Gasket",
+        "vertices": 1536,
+        "faces": 1536,
+        "triangles": 3072,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Glass_Thread_01",
+        "vertices": 3072,
+        "faces": 3072,
+        "triangles": 6144,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Glass_Thread_02",
+        "vertices": 3072,
+        "faces": 3072,
+        "triangles": 6144,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Glass_Thread_03",
+        "vertices": 3072,
+        "faces": 3072,
+        "triangles": 6144,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Jar_Glass",
+        "vertices": 7938,
+        "faces": 8192,
+        "triangles": 15872,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Label",
+        "vertices": 1024,
+        "faces": 1024,
+        "triangles": 2048,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Nut_Cream",
+        "vertices": 3074,
+        "faces": 3328,
+        "triangles": 6144,
+        "uv_layers": 1,
+        "boundary_edges": 0,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0,
+        "collapsed_textured_uv_faces": 0
+      }
+    ],
+    "camera": {
+      "name": "Packshot | frontal",
+      "projection": "ORTHO",
+      "subject_bbox_ndc": [
+        0.1573,
+        0.124,
+        0.8427,
+        0.9053
+      ],
+      "scope": "Projected object bounding boxes; conservative, not visible silhouette"
+    },
+    "limits": "Base mesh only; no self-intersection, UV overlap, shader equivalence or aesthetic-quality proof."
+  },
+  "audit_ms": 49.17
+}
