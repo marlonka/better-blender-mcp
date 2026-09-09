@@ -28,7 +28,7 @@ _PROTOCOL_RE = re.compile(r"ADDON_PROTOCOL_VERSION\s*=\s*(\d+)")
 # Matches the current name and the pre-rename "Blender MCP" so install-addon
 # still replaces installs from older releases.
 _BL_INFO_NAME_RE = re.compile(
-    r"""["']name["']\s*:\s*["'](?:MCP for Blender|Blender MCP)["']"""
+    r"""["']name["']\s*:\s*["'](?:Better Blender MCP|MCP for Blender|Blender MCP)["']"""
 )
 
 
@@ -74,7 +74,7 @@ class AddonStatusReport:
 
 _UPDATE_HINT = (
     "Run `uvx blender-mcp install-addon` to update it, then in Blender: "
-    "Preferences → Add-ons → disable and re-enable 'Interface: MCP for Blender' "
+    "Preferences → Add-ons → disable and re-enable 'Interface: Better Blender MCP' "
     "(or restart Blender) and click Start MCP Server."
 )
 
@@ -347,10 +347,11 @@ def install_addon(
     msg = (
         f"Installed MCP for Blender addon to {target}. "
         "In Blender: Preferences → Add-ons → disable then enable "
-        "'Interface: MCP for Blender', or restart Blender, then click Start MCP Server."
+        "'Interface: Better Blender MCP', or restart Blender, then click Start MCP Server."
     )
-    if len(replaced) > 1:
-        msg += f" Also updated: {', '.join(replaced[:-1])}."
+    others = [path for path in replaced if path != str(target)]
+    if others:
+        msg += f" Also updated: {', '.join(others)}."
 
     return AddonInstallResult(
         True,
@@ -394,7 +395,7 @@ def handshake_addon(blender_connection) -> AddonHandshake:
                 f"Blender addon protocol {protocol_i!r} is behind "
                 f"expected {EXPECTED_ADDON_PROTOCOL_VERSION}. "
                 "Run `uvx blender-mcp install-addon` to update it, then "
-                "restart Blender or disable/enable 'Interface: MCP for Blender', "
+                "restart Blender or disable/enable 'Interface: Better Blender MCP', "
                 "then Start MCP Server. Trajectory still works via fallbacks."
             )
         return AddonHandshake(
@@ -412,7 +413,7 @@ def handshake_addon(blender_connection) -> AddonHandshake:
             warning = (
                 "Blender addon is outdated (no get_addon_info). "
                 "Run `uvx blender-mcp install-addon` to update it, then "
-                "restart Blender or disable/enable 'Interface: MCP for Blender', "
+                "restart Blender or disable/enable 'Interface: Better Blender MCP', "
                 "then Start MCP Server. Fallbacks keep working in the meantime."
             )
             return AddonHandshake(
@@ -479,7 +480,10 @@ def run_cli(argv: list[str] | None = None) -> int:
         result = install_addon(
             Path(args.addons_dir) if args.addons_dir else None,
         )
-        print(result.message)
+        # Windows redirected stdout may use cp1252, which cannot encode the
+        # arrows in this message. Installation already succeeded at this point.
+        encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
+        print(result.message.encode(encoding, errors="replace").decode(encoding))
         return 0 if result.success else 1
 
     if args.command == "addon-paths":

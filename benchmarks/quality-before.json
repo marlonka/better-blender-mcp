@@ -1,0 +1,272 @@
+{
+  "version": 1,
+  "blender": "5.2.1 LTS",
+  "artifacts": {
+    "blend": {
+      "path": "examples/product-studio/public/assets/winternuesse.blend",
+      "bytes": 2345175,
+      "updated_this_run": true,
+      "archived": false
+    },
+    "render": {
+      "path": "benchmarks/renders/before.png",
+      "bytes": 867045,
+      "updated_this_run": true
+    }
+  },
+  "audit": {
+    "scope": "render-enabled scene meshes",
+    "mesh_count": 10,
+    "checked_mesh_count": 10,
+    "material_count": 6,
+    "vertices": 31868,
+    "triangles": 58368,
+    "issue_count": 13,
+    "issue_counts": {
+      "GLTF_BAKE_REQUIRED": 2,
+      "OPEN_BOUNDARY": 10,
+      "UV_COLLAPSED": 1
+    },
+    "issues": [
+      {
+        "code": "GLTF_BAKE_REQUIRED",
+        "target": "Contents | roasted nut cream",
+        "detail": "Base Color: ShaderNodeTexNoise",
+        "fix": "Bake this shader input to an image before glTF export; compare the exported material."
+      },
+      {
+        "code": "GLTF_BAKE_REQUIRED",
+        "target": "Contents | roasted nut cream",
+        "detail": "Normal: ShaderNodeBump, ShaderNodeTexNoise",
+        "fix": "Bake this shader input to an image before glTF export; compare the exported material."
+      },
+      {
+        "code": "OPEN_BOUNDARY",
+        "target": "Cap",
+        "detail": "532 boundary edges.",
+        "fix": "Weld geometric seams and close the solid, or mark an intentional sheet with better_mcp_open_surface."
+      },
+      {
+        "code": "UV_COLLAPSED",
+        "target": "Cap",
+        "detail": "256 textured faces have zero UV area.",
+        "fix": "Use planar UVs on caps and cylindrical UVs on walls."
+      },
+      {
+        "code": "OPEN_BOUNDARY",
+        "target": "Cap_Gasket",
+        "detail": "524 boundary edges.",
+        "fix": "Weld geometric seams and close the solid, or mark an intentional sheet with better_mcp_open_surface."
+      },
+      {
+        "code": "OPEN_BOUNDARY",
+        "target": "Cap_Liner",
+        "detail": "522 boundary edges.",
+        "fix": "Weld geometric seams and close the solid, or mark an intentional sheet with better_mcp_open_surface."
+      },
+      {
+        "code": "OPEN_BOUNDARY",
+        "target": "Cap_Top",
+        "detail": "526 boundary edges.",
+        "fix": "Weld geometric seams and close the solid, or mark an intentional sheet with better_mcp_open_surface."
+      },
+      {
+        "code": "OPEN_BOUNDARY",
+        "target": "Glass_Thread_01",
+        "detail": "536 boundary edges.",
+        "fix": "Weld geometric seams and close the solid, or mark an intentional sheet with better_mcp_open_surface."
+      },
+      {
+        "code": "OPEN_BOUNDARY",
+        "target": "Glass_Thread_02",
+        "detail": "536 boundary edges.",
+        "fix": "Weld geometric seams and close the solid, or mark an intentional sheet with better_mcp_open_surface."
+      },
+      {
+        "code": "OPEN_BOUNDARY",
+        "target": "Glass_Thread_03",
+        "detail": "536 boundary edges.",
+        "fix": "Weld geometric seams and close the solid, or mark an intentional sheet with better_mcp_open_surface."
+      },
+      {
+        "code": "OPEN_BOUNDARY",
+        "target": "Jar_Glass",
+        "detail": "578 boundary edges.",
+        "fix": "Weld geometric seams and close the solid, or mark an intentional sheet with better_mcp_open_surface."
+      },
+      {
+        "code": "OPEN_BOUNDARY",
+        "target": "Label",
+        "detail": "518 boundary edges.",
+        "fix": "Weld geometric seams and close the solid, or mark an intentional sheet with better_mcp_open_surface."
+      },
+      {
+        "code": "OPEN_BOUNDARY",
+        "target": "Nut_Cream",
+        "detail": "540 boundary edges.",
+        "fix": "Weld geometric seams and close the solid, or mark an intentional sheet with better_mcp_open_surface."
+      }
+    ],
+    "objects": [
+      {
+        "name": "Cap",
+        "vertices": 2827,
+        "faces": 2560,
+        "triangles": 5120,
+        "uv_layers": 1,
+        "boundary_edges": 532,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0,
+        "collapsed_textured_uv_faces": 256
+      },
+      {
+        "name": "Cap_Gasket",
+        "vertices": 1799,
+        "faces": 1536,
+        "triangles": 3072,
+        "uv_layers": 1,
+        "boundary_edges": 524,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Cap_Liner",
+        "vertices": 1542,
+        "faces": 1280,
+        "triangles": 2560,
+        "uv_layers": 1,
+        "boundary_edges": 522,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Cap_Top",
+        "vertices": 2056,
+        "faces": 1792,
+        "triangles": 3584,
+        "uv_layers": 1,
+        "boundary_edges": 526,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0,
+        "collapsed_textured_uv_faces": 0
+      },
+      {
+        "name": "Glass_Thread_01",
+        "vertices": 3341,
+        "faces": 3072,
+        "triangles": 6144,
+        "uv_layers": 1,
+        "boundary_edges": 536,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Glass_Thread_02",
+        "vertices": 3341,
+        "faces": 3072,
+        "triangles": 6144,
+        "uv_layers": 1,
+        "boundary_edges": 536,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Glass_Thread_03",
+        "vertices": 3341,
+        "faces": 3072,
+        "triangles": 6144,
+        "uv_layers": 1,
+        "boundary_edges": 536,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Jar_Glass",
+        "vertices": 8738,
+        "faces": 8448,
+        "triangles": 16896,
+        "uv_layers": 1,
+        "boundary_edges": 578,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      },
+      {
+        "name": "Label",
+        "vertices": 1028,
+        "faces": 768,
+        "triangles": 1536,
+        "uv_layers": 1,
+        "boundary_edges": 518,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0,
+        "collapsed_textured_uv_faces": 0
+      },
+      {
+        "name": "Nut_Cream",
+        "vertices": 3855,
+        "faces": 3584,
+        "triangles": 7168,
+        "uv_layers": 1,
+        "boundary_edges": 540,
+        "non_manifold_edges": 0,
+        "inconsistent_edges": 0,
+        "degenerate_faces": 0
+      }
+    ],
+    "camera": {
+      "name": "Camera",
+      "projection": "ORTHO",
+      "subject_bbox_ndc": [
+        0.0823,
+        0.0392,
+        0.8554,
+        0.9655
+      ],
+      "scope": "Projected object bounding boxes; conservative, not visible silhouette"
+    },
+    "limits": "Base mesh only; no self-intersection, UV overlap, shader equivalence or aesthetic-quality proof."
+  },
+  "comparison": {
+    "comparable": true,
+    "assumption": "Single product on transparent or near-white background; row-filled silhouette; no alignment",
+    "silhouette_iou": 0.98415,
+    "reference_bbox_px": [
+      70,
+      41,
+      745,
+      866
+    ],
+    "render_bbox_px": [
+      71,
+      43,
+      745,
+      863
+    ],
+    "bbox_delta_px": [
+      1,
+      2,
+      0,
+      -3
+    ],
+    "clipped_white_foreground_fraction": 0.0436,
+    "render_updated_this_run": true,
+    "foreground_rgb_mae": 0.07686,
+    "rgb_mae_by_image_third": {
+      "top": 0.05469,
+      "middle": 0.06735,
+      "bottom": 0.11023
+    },
+    "channel_space": "Normalized Blender image-buffer values; sRGB for the example PNGs"
+  },
+  "audit_ms": 134.79,
+  "reproduction": "benchmarks/fixtures/product-before.py; recreates initial geometry/materials under .local/baseline-product"
+}

@@ -8,5 +8,10 @@ except PackageNotFoundError:
     # Package is not installed (e.g. running from a source checkout)
     __version__ = "unknown"
 
-# Expose key classes and functions for easier imports
-from .server import BlenderConnection, get_blender_connection
+from .connection import BlenderConnection
+
+
+def get_blender_connection():
+    """Load legacy integrations only when a legacy caller requests them."""
+    from .server import get_blender_connection as legacy_connection
+    return legacy_connection()

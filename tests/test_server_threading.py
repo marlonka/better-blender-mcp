@@ -72,6 +72,7 @@ def _load_server_class():
 
     namespace = {
         "bpy": bpy,
+        "ast": ast,
         "socket": socket,
         "threading": threading,
         "json": json,
@@ -79,6 +80,9 @@ def _load_server_class():
         "queue": __import__("queue"),
         "traceback": __import__("traceback"),
         "os": __import__("os"),
+        "hashlib": __import__("hashlib"),
+        "uuid": __import__("uuid"),
+        "redirect_stdout": __import__("contextlib").redirect_stdout,
         "get_blendermcp_addon_preferences": lambda context=None: None,
         "RODIN_FREE_TRIAL_KEY": "vibecoding",
         # start()/stop() drive the edit-capture handlers, which live at module

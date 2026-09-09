@@ -21,3 +21,11 @@ local_tests/
 supabase/
 
 scripts/
+
+# Local scene backups, processes and browser builds
+.local/
+node_modules/
+*.blend1
+examples/product-studio/dist/
+examples/product-studio/test-results/
+examples/product-studio/playwright-report/

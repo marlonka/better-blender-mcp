@@ -1,0 +1,226 @@
+{
+  "recorded_at": "2026-09-09T20:48:53.941660+00:00",
+  "upstream_commit": "5f8ddaf6e987c4aa0c3467fcc548838b28f64477",
+  "platform": "win32",
+  "python": "3.11.15",
+  "measurement": "UTF-8 bytes and wall-clock latency; not billed tokens or quality scores",
+  "tool_schemas": {
+    "upstream": {
+      "tools": 28,
+      "bytes": 30062,
+      "instructions_bytes": 0,
+      "resource_definitions_bytes": 2
+    },
+    "enhanced": {
+      "tools": 5,
+      "bytes": 3179,
+      "instructions_bytes": 1186,
+      "resource_definitions_bytes": 172,
+      "optional_recipe_reference_bytes": 2069
+    },
+    "scope": "Full tools/list definitions. Compact mode omits upstream asset-service tools; legacy entry point remains available."
+  },
+  "parser": {
+    "payload_bytes": 910043,
+    "chunk_bytes": 4096,
+    "runs": {
+      "upstream": {
+        "median_ms": 741.924,
+        "samples_ms": [
+          767.093,
+          687.556,
+          669.322,
+          741.924,
+          823.048
+        ]
+      },
+      "enhanced": {
+        "median_ms": 33.744,
+        "samples_ms": [
+          33.744,
+          34.214,
+          33.153,
+          32.888,
+          47.86
+        ]
+      }
+    },
+    "scope": "In-memory framing microbenchmark; excludes network, Blender and LLM time."
+  },
+  "blender": "5.2.1 LTS",
+  "enhanced_version": "0.1.0",
+  "inspection": {
+    "objects": 12,
+    "full_digest": {
+      "request_bytes": 46,
+      "response_bytes": 2389,
+      "elapsed_ms": 55.364
+    },
+    "legacy_full_snapshot": {
+      "request_bytes": 47,
+      "response_bytes": 4615,
+      "elapsed_ms": 55.723
+    },
+    "unchanged_delta": {
+      "request_bytes": 77,
+      "response_bytes": 145,
+      "elapsed_ms": 50.281
+    },
+    "scope": "Same enhanced addon and unchanged scene. Snapshot and digest have different fields; delta reports changes only to digest fields."
+  },
+  "staged_edits": {
+    "stages": 5,
+    "legacy_calls": [
+      {
+        "request_bytes": 138,
+        "response_bytes": 59,
+        "elapsed_ms": 50.716
+      },
+      {
+        "request_bytes": 156,
+        "response_bytes": 59,
+        "elapsed_ms": 50.765
+      },
+      {
+        "request_bytes": 97,
+        "response_bytes": 59,
+        "elapsed_ms": 55.19
+      },
+      {
+        "request_bytes": 114,
+        "response_bytes": 59,
+        "elapsed_ms": 54.064
+      },
+      {
+        "request_bytes": 193,
+        "response_bytes": 59,
+        "elapsed_ms": 54.795
+      }
+    ],
+    "enhanced_calls": [
+      {
+        "request_bytes": 664,
+        "response_bytes": 140,
+        "elapsed_ms": 64.826
+      },
+      {
+        "request_bytes": 80,
+        "response_bytes": 440,
+        "elapsed_ms": 46.869
+      }
+    ],
+    "scope": "Five separate execute_code calls versus submit + one status call. Upstream can also combine Python in one blocking call; this is a workflow comparison, not a minimum-call lower bound."
+  },
+  "product_quality": {
+    "version": 1,
+    "blender": "5.2.1 LTS",
+    "comparison": {
+      "comparable": true,
+      "assumption": "Single product on transparent or near-white background; row-filled silhouette; no alignment",
+      "silhouette_iou": 0.98415,
+      "reference_bbox_px": [
+        70,
+        41,
+        745,
+        866
+      ],
+      "render_bbox_px": [
+        71,
+        43,
+        745,
+        863
+      ],
+      "bbox_delta_px": [
+        1,
+        2,
+        0,
+        -3
+      ],
+      "foreground_rgb_mae": 0.0723,
+      "rgb_mae_by_image_third": {
+        "top": 0.05431,
+        "middle": 0.06702,
+        "bottom": 0.09643
+      },
+      "channel_space": "Normalized Blender image-buffer values; sRGB for the example PNGs",
+      "clipped_white_foreground_fraction": 0.04359,
+      "render_updated_this_run": true
+    },
+    "audit_ms": 140.43,
+    "audit": {
+      "scope": "Product",
+      "mesh_count": 8,
+      "checked_mesh_count": 8,
+      "material_count": 6,
+      "vertices": 28166,
+      "triangles": 56320,
+      "issue_count": 0,
+      "issue_counts": {},
+      "camera": {
+        "name": "Camera",
+        "projection": "ORTHO",
+        "subject_bbox_ndc": [
+          0.0823,
+          0.0392,
+          0.8554,
+          0.9675
+        ],
+        "scope": "Projected object bounding boxes; conservative, not visible silhouette"
+      },
+      "limits": "Base mesh only; no self-intersection, UV overlap, shader equivalence or aesthetic-quality proof.",
+      "issues": [],
+      "omitted_issues": 0
+    }
+  },
+  "worker_responsiveness": {
+    "render_worker_elapsed_ms": 18087,
+    "successful_gui_probes": 42,
+    "gui_probe_median_ms": 26.246000000000002,
+    "gui_probe_max_ms": 37.918,
+    "gui_probe_samples_ms": [
+      20.85,
+      26.438,
+      28.632,
+      27.802,
+      20.268,
+      33.59,
+      31.782,
+      30.175,
+      29.187,
+      26.778,
+      22.267,
+      22.598,
+      33.372,
+      26.099,
+      24.265,
+      21.663,
+      17.315,
+      26.725,
+      22.337,
+      17.175,
+      25.868,
+      19.374,
+      31.495,
+      26.393,
+      20.341,
+      19.661,
+      26.042,
+      22.275,
+      33.323,
+      31.881,
+      27.418,
+      29.276,
+      28.898,
+      25.723,
+      22.209,
+      35.675,
+      20.538,
+      35.351,
+      37.918,
+      37.554,
+      19.795,
+      22.101
+    ],
+    "scope": "Live GUI addon served inspection requests while a separate six-thread Blender process rebuilt/exported/rendered the product. Not a measurement of UI frame rate or freeze frequency."
+  }
+}

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f1e9" />
+    <meta name="description" content="A tactile, interactive study of enerBiO Winternüsse. Explore an editable Blender product model in a real-time 3D studio." />
+    <title>Winternüsse — Object Studio</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23942825'/%3E%3Cpath d='M18 19h28v7H18zm2 10h24v21H20z' fill='%23f4f1e9'/%3E%3C/svg%3E" />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <a class="skip" href="#studio">Skip to product studio</a>
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label="Object Studio home"><span class="brand-icon" aria-hidden="true">o<span></span></span>object<span class="wordmark-light">studio</span><span class="brand-period">.</span></a>
+      <div class="header-note"><span class="tiny-dot"></span> An exercise in looking closer</div>
+      <a class="source-link" href="https://github.com/marlonka/better-blender-mcp" target="_blank" rel="noreferrer">Behind the object <i data-lucide="arrow-up-right"></i></a>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="product-title">
+        <div class="intro">
+          <div class="eyebrow"><span>OBJECT NO. 001</span><span class="eyebrow-rule"></span><span>WINTER EDITION</span></div>
+          <h1 id="product-title">A little jar.<br />A whole lot<br /> of <em>winter.</em></h1>
+          <p class="intro-copy">Roasted nuts. Warm spice. The small details that make an everyday object worth a closer look.</p>
+          <div class="product-title"><span class="enerbio">ener<span>BiO</span></span><div><strong>Gebrannte Winternüsse</strong><span>Organic topping · 250 g</span></div></div>
+          <div class="intro-actions"><button id="explore" class="primary">Explore the object <i data-lucide="arrow-up-right"></i></button><button id="reference-open" class="text-button">View reference <i data-lucide="scan"></i></button></div>
+          <div class="ingredient-notes"><span><i data-lucide="leaf"></i> Organic</span><span><i data-lucide="sprout"></i> Vegan</span><span><i data-lucide="sparkles"></i> Limited edition</span></div>
+        </div>
+        <div id="studio" class="studio" tabindex="-1" aria-label="Interactive 3D product studio">
+          <div class="studio-topline"><span><span class="live-dot"></span> INTERACTIVE STUDY</span><span id="view-label">01 / THE OBJECT</span></div>
+          <div class="stage-ghost" aria-hidden="true">winter</div>
+          <canvas id="canvas" aria-label="3D jar: drag to rotate, scroll to zoom. Use the view controls below for keyboard access." tabindex="0"></canvas>
+          <div id="loader" class="loader" role="status"><span class="loader-ring"></span><span>Making room for the details…</span></div>
+          <div id="render-error" class="render-error" hidden><img src="/assets/reference.png" alt="Front reference of the enerBiO Winternüsse jar" /><p>3D couldn’t load. The reference is still here.</p><button class="primary" id="retry">Try again</button></div>
+          <div class="stage-caption"><span class="caption-line"></span><span id="stage-caption">Glass, paper, and a little winter magic.</span></div>
+          <div class="stage-tools"><button id="reset" class="icon-button" aria-label="Reset camera" title="Reset camera"><i data-lucide="rotate-ccw"></i></button><button id="fullscreen" class="icon-button" aria-label="Enter fullscreen" title="Fullscreen"><i data-lucide="maximize"></i></button></div>
+          <div class="studio-bottomline"><span><i data-lucide="move-up-right"></i> Drag to discover <span class="divider">/</span> Scroll to get closer</span><span class="dimension">250 g <span class="small-e">℮</span></span></div>
+        </div>
+      </section>
+      <section class="control-bar" aria-label="Product studio controls">
+        <div class="views" role="group" aria-label="Product view"><button data-view="object" aria-pressed="true"><span>01</span> The object</button><button data-view="detail" aria-pressed="false"><span>02</span> Up close</button><button data-view="layers" aria-pressed="false"><span>03</span> Lift the lid <i data-lucide="arrow-up"></i></button></div>
+        <div class="scene-controls"><div class="lighting" role="group" aria-label="Lighting"><span>LIGHT</span><button class="light-swatch active" data-light="daylight" aria-label="Daylight" aria-pressed="true" title="Daylight"></button><button class="light-swatch" data-light="warm" aria-label="Warm studio" aria-pressed="false" title="Warm studio"></button><button class="light-swatch" data-light="dark" aria-label="Midnight studio" aria-pressed="false" title="Midnight studio"></button></div><span class="control-separator"></span><button id="motion" class="motion-toggle" aria-pressed="false"><span class="switch"><span></span></span>Auto rotate</button></div>
+      </section>
+      <section class="details-strip" aria-label="About this study">
+        <div class="detail-statement"><span class="serif-asterisk">✳</span><p>Ordinary things.<br /><strong>Extraordinary details.</strong></p></div>
+        <div class="detail-note"><span class="detail-number">01 — FORM</span><p>A rounded shoulder, a rolled glass base.<br />Built to hold more than a topping.</p></div>
+        <div class="detail-note"><span class="detail-number">02 — SURFACE</span><p>Printed paper. Soft enamel. Clear glass.<br />Each catches the light in its own way.</p></div>
+        <button id="about-open" class="detail-about"><span>From photograph<br />to something you can turn.</span><i data-lucide="arrow-up-right"></i></button>
+      </section>
+    </main>
+    <footer><span>A digital material study by <a href="https://github.com/marlonka" target="_blank" rel="noreferrer">Marlon</a></span><span>BLENDER → THREE.JS <span class="footer-version">r186</span></span></footer>
+    <dialog id="reference-dialog" aria-labelledby="reference-title"><div class="dialog-heading"><div><div class="eyebrow">THE STARTING POINT</div><h2 id="reference-title">Every detail starts here.</h2></div><button class="icon-button close-dialog" aria-label="Close reference"><i data-lucide="x"></i></button></div><div class="reference-layout"><img src="/assets/reference.png" alt="Original front photograph of enerBiO Topping Gebrannte Winternüsse, 250 g" /><div><span class="detail-number">ONE IMAGE, MANY SURFACES</span><p>The visible label is sampled from this photograph and mapped onto the curved paper sleeve.</p><p>The back, glass thickness, hidden threads, and physical scale are inferred. This is a reference reconstruction, with editable geometry.</p><a class="download-link" href="/assets/winternuesse.glb" download>Download 3D model <i data-lucide="download"></i></a></div></div></dialog>
+    <dialog id="about-dialog" aria-labelledby="about-title"><div class="dialog-heading"><div><div class="eyebrow">THE MAKING OF OBJECT 001</div><h2 id="about-title">Made to be looked at.</h2></div><button class="icon-button close-dialog" aria-label="Close study details"><i data-lucide="x"></i></button></div><p>Modeled in Blender, presented with Three.js r186. The browser loads the exported geometry, UVs, and materials from the same editable scene.</p><div class="about-specs"><div><span>Geometry</span><strong id="mesh-count">9 meshes</strong></div><div><span>Artwork</span><strong>4K cylindrical texture</strong></div><div><span>Lighting</span><strong>Three studio moods</strong></div></div><p class="fineprint">One front photograph cannot establish the hidden surfaces or exact dimensions. Label colours include lighting from the original photograph. This independent study is not affiliated with ROSSMANN or enerBiO.</p><div class="dialog-downloads"><a class="primary" href="/assets/winternuesse.blend" download>Download Blender scene <i data-lucide="download"></i></a><a class="download-link" href="/assets/winternuesse.glb" download>Get the GLB <i data-lucide="arrow-down"></i></a></div></dialog>
+    <div id="announcement" class="sr-only" aria-live="polite"></div>
+  </body>
+</html>

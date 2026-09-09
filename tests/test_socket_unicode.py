@@ -50,6 +50,13 @@ class _ScriptedSocket:
 def _make_server():
     server = BlenderMCPServer(port=0)
     server.execute_command = lambda command: {"status": "success", "result": {}}
+    # Decoder-only fixture: retain queued commands for assertions, but release
+    # the client thread as a main-loop dispatcher would after execution.
+    enqueue = server.command_queue.put_nowait
+    def acknowledge(item):
+        enqueue(item)
+        item[1].put_nowait({"status": "success", "result": {}})
+    server.command_queue.put_nowait = acknowledge
     return server
 
 

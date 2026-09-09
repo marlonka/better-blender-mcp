@@ -1,7 +1,7 @@
 [project]
 name = "blender-mcp"
-version = "1.9.1"
-description = "Blender integration through the Model Context Protocol"
+version = "1.9.1.post1"
+description = "Better Blender MCP: compact tools, isolated workers and reference-driven model checks"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [
@@ -17,8 +17,12 @@ dependencies = [
     "httpx>=0.27.0",
 ]
 
+[project.optional-dependencies]
+dev = ["pytest>=8,<9", "pillow>=11,<13", "numpy>=2,<3"]
+
 [project.scripts]
 blender-mcp = "blender_mcp.server:main"
+better-blender-mcp = "blender_mcp.compact_server:main"
 
 [tool.pytest.ini_options]
 python_files = ["test_*.py"]
@@ -35,5 +39,5 @@ package-dir = {"" = "src"}
 blender_mcp = ["bundled/addon.py"]
 
 [project.urls]
-"Homepage" = "https://github.com/ahujasid/blender-mcp"
-"Bug Tracker" = "https://github.com/ahujasid/blender-mcp/issues"
+"Homepage" = "https://github.com/marlonka/better-blender-mcp"
+"Bug Tracker" = "https://github.com/marlonka/better-blender-mcp/issues"
