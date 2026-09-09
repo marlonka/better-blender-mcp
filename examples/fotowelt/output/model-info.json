@@ -1,0 +1,13 @@
+{
+  "elapsed_seconds": 104.68,
+  "objects": 170,
+  "mesh_objects": 146,
+  "dimensions_estimated_m": [
+    4.24,
+    0.8,
+    2.73
+  ],
+  "geometry": "Three complete kiosks, pickup lockers, three floor printers, two chrome/plywood stools, 53 rounded slats, extruded lettering, glass trays, posters and accessories.",
+  "reference": "../assets/reference.jpeg",
+  "recipe": "../build_fotowelt.py"
+}

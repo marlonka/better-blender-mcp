@@ -62,6 +62,21 @@ can supply the executable directly for workers that do not need a GUI connection
 To keep upstream's asset-service tools, run `blender-mcp` instead. Both entry points
 use the improved transport. The enhanced addon retains upstream protocol 5 commands.
 
+### After restarting your computer
+
+Open Blender with **Better Blender MCP** enabled. The addon auto-starts its local
+server on port **9876** by default. In the 3D viewport, press **N**, open **MCP for
+Blender**, and check **Connected on port 9876**. If stopped, click **Connect to MCP
+server**. The panel reads the actual server state, including after opening a scene
+that was saved with a disconnected flag.
+
+Open your configured MCP client (for example Codex). It launches the compact
+server using the saved `command` and `args`; no terminal command or reinstall is
+needed. Keep the checkout and Python environment at their configured paths. If
+the addon is missing, enable it once under **Preferences → Add-ons** and save
+preferences. A new Blender major/minor version may need the addon installed in
+that version's add-ons directory.
+
 ## A modeling iteration
 
 1. Inspect the reference and subject. Match silhouette, proportions and camera first.
@@ -108,6 +123,9 @@ the supporting browser loads its GLB using **Three.js r186**.
 - [Before audit](benchmarks/quality-before.json) / [after audit](benchmarks/quality-after.json)
 - [Measured MCP results](benchmarks/product-study.json)
 - [Viewer and asset provenance](examples/product-studio/README.md)
+- [Fotowelt station reconstruction](examples/fotowelt/README.md): a second reference
+  with cabinetry, three kiosks, bent-plywood seating and packed photo artwork,
+  built through the same enhanced MCP workers.
 
 The automatic audit found 13 issues in the initial reconstruction. Repairs removed
 open seams and collapsed UVs, joined the cap into a closed solid, and baked the nut

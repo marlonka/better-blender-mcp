@@ -1,0 +1,47 @@
+{
+  "concept": "Fictional Limited Edition packaging concept, not an official collaboration.",
+  "source": "renders/winternuesse-studio.blend",
+  "texture": "label.png",
+  "texture_generation": "Built-in image_gen; exact prompt in label-prompt.txt",
+  "contents": "White cream, fine surface normal, weak subsurface scattering",
+  "label_uv_scale_u": 1.505525,
+  "engine": "Cycles",
+  "samples": 128,
+  "render_device": {
+    "backend": "OPTIX",
+    "devices": [
+      "NVIDIA GeForce RTX 5070 Ti"
+    ]
+  },
+  "resolution": [
+    1600,
+    1800
+  ],
+  "background": "#FFFFFF",
+  "views": [
+    {
+      "name": "frontal",
+      "file": "ultra-white-frontal.png",
+      "camera": "Packshot | frontal",
+      "azimuth_degrees": 0,
+      "elevation_degrees": 7,
+      "render_seconds": 11.74
+    },
+    {
+      "name": "links",
+      "file": "ultra-white-links.png",
+      "camera": "Packshot | links",
+      "azimuth_degrees": -28,
+      "elevation_degrees": 14,
+      "render_seconds": 11.45
+    },
+    {
+      "name": "rechts",
+      "file": "ultra-white-rechts.png",
+      "camera": "Packshot | rechts",
+      "azimuth_degrees": 30,
+      "elevation_degrees": 21,
+      "render_seconds": 11.54
+    }
+  ]
+}
