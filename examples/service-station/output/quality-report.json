@@ -1,0 +1,63 @@
+{
+  "scene": "Service station | isolated furniture",
+  "model_objects": 228,
+  "mesh_objects": 161,
+  "evaluated_vertices": 208362,
+  "evaluated_triangles": 372040,
+  "bounds_m": {
+    "minimum": [
+      -1.5023586750030518,
+      -0.04059549421072006,
+      0.012000001966953278
+    ],
+    "maximum": [
+      0.9599999785423279,
+      0.8040081262588501,
+      1.5800001621246338
+    ],
+    "dimensions": [
+      2.4624,
+      0.8446,
+      1.568
+    ]
+  },
+  "textures": [
+    {
+      "name": "oak_veneer_01_diff_2k.jpg",
+      "packed": true,
+      "size": [
+        2048,
+        2048
+      ]
+    },
+    {
+      "name": "oak_veneer_01_nor_gl_2k.jpg",
+      "packed": true,
+      "size": [
+        2048,
+        2048
+      ]
+    }
+  ],
+  "fonts": [
+    {
+      "name": "Arial Narrow.005",
+      "packed": true
+    }
+  ],
+  "recycling_apertures": 5,
+  "furniture_only": true,
+  "transparent_render": true,
+  "cameras": [
+    "SS | 01 Reference angle",
+    "SS | 02 Front elevation",
+    "SS | 03 Rear construction",
+    "SS | 04 Dispenser detail"
+  ],
+  "limitations": [
+    "Physical size estimated from photographs; no measured dimensions provided.",
+    "Rear and internal construction inferred. A numeric likeness percentage is not established."
+  ],
+  "texture_source": "https://polyhaven.com/a/oak_veneer_01",
+  "texture_license": "CC0"
+}

@@ -1,0 +1,11 @@
+{
+  "asset": "Oak Veneer 01",
+  "source": "https://polyhaven.com/a/oak_veneer_01",
+  "license": "CC0",
+  "files": [
+    "oak_veneer_01_diff_2k.jpg",
+    "oak_veneer_01_nor_gl_2k.jpg"
+  ],
+  "use": "Packed into Blender materials; color adjusted in the shader.",
+  "reference_photographs": "User-provided photographs, inspected locally and not redistributed."
+}
